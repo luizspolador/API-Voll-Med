@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "85cf425c-9c87-44b7-ba97-4478c5da0a38",
+		"name": "API Vol Med Alura",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26935506"
+	},
+	"item": [
+		{
+			"name": "Medico",
+			"item": [
+				{
+					"name": "listagem de medicos ordenacao",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-inicial}}/medicos?sort=nome,desc&size=2",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"medicos"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "nome,desc"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cadastro de medico",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"nome\": \"Mariana Spolador\",\r\n\"email\": \"mariana.spolador@voll.med\",\r\n\"telefone\": \"43999583746\",\r\n\"crm\": \"123425\",\r\n\"especialidade\": \"CARDIOLOGIA\",\r\n\"endereco\": {\r\n    \"logradouro\": \"rua 562\",\r\n    \"bairro\": \"bairro3\",\r\n    \"cep\": \"12345679\",\r\n    \"cidade\": \"Londrina\",\r\n    \"uf\": \"PR\",\r\n    \"numero\": \"1\",\r\n    \"complemento\": \"complemento\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-inicial}}/medicos",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"medicos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listagem de medicos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-inicial}}/medicos",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"medicos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listagem de medicos paginacao",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-inicial}}/medicos?size=2&page=0",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"medicos"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar medico",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 3,\r\n    \"nome\":\"Luiz Henrique Fernandes Spolador\",\r\n    \"telefone\": \"43985729452\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-inicial}}/medicos",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"medicos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "exclusão lógica medico",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url-inicial}}/medicos/3",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"medicos",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Paciente",
+			"item": [
+				{
+					"name": "cadastro de paciente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"nome\": \"Carlos Jacir\",\r\n\"email\": \"carlao.jaca@gmail.com\",\r\n\"cpf\": \"467.234.245-12\",\r\n\"telefone\": \"43999758084\",\r\n\"endereco\": {\r\n    \"logradouro\": \"rua 6422\",\r\n    \"bairro\": \"bairro5\",\r\n    \"cep\": \"50247265\",\r\n    \"cidade\": \"Cambe\",\r\n    \"uf\": \"PR\",\r\n    \"numero\": \"73\",\r\n    \"complemento\": \"cmp 6\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-inicial}}/pacientes",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"pacientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listagem de pacientes paginacao",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-inicial}}/medicos?size=1&page=0",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"medicos"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "1"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listagem de pacientes ordenacao",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-inicial}}/pacientes?sort=id,desc&size=2",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"pacientes"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "id,desc"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar paciente",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 3,\r\n    \"nome\":\"Luiz Henrique Fernandes Spolador\",\r\n    \"telefone\": \"43985729452\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-inicial}}/pacientes",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"pacientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listagem de pacientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url-inicial}}/pacientes",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"pacientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "exclusão lógica paciente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url-inicial}}/pacientes/3",
+							"host": [
+								"{{url-inicial}}"
+							],
+							"path": [
+								"pacientes",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
