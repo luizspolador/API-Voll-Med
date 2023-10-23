@@ -1,16 +1,19 @@
 package br.com.spolador.apimed.controller;
 
-import br.com.spolador.apimed.dto.paciente.DadosAtualizacaoPaciente;
-import br.com.spolador.apimed.dto.paciente.DadosCadastroPaciente;
-import br.com.spolador.apimed.dto.paciente.DadosListagemPaciente;
-import br.com.spolador.apimed.entidades.paciente.Paciente;
-import br.com.spolador.apimed.repositories.PacienteRepository;
+import br.com.spolador.apimed.domain.dto.paciente.DadosAtualizacaoPaciente;
+import br.com.spolador.apimed.domain.dto.paciente.DadosCadastroPaciente;
+import br.com.spolador.apimed.domain.dto.paciente.DadosDetalhamentoPaciente;
+import br.com.spolador.apimed.domain.dto.paciente.DadosListagemPaciente;
+import br.com.spolador.apimed.domain.entidades.paciente.Paciente;
+import br.com.spolador.apimed.domain.repositories.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 
@@ -18,31 +21,43 @@ import javax.validation.Valid;
 @RequestMapping("pacientes")
 public class PacienteController {
 
-    @Autowired // injeção de dependencias
+    @Autowired
     private PacienteRepository pacienteRepository;
 
     @PostMapping
     @Transactional
-    public void cadastrarPacientes(@RequestBody @Valid DadosCadastroPaciente dados){
-        pacienteRepository.save(new Paciente(dados)); // recebe um dto e converte para Paciente
+    public ResponseEntity cadastrarPacientes(@RequestBody @Valid DadosCadastroPaciente dados, UriComponentsBuilder uriBuilder){
+        var paciente = new Paciente(dados);
+        pacienteRepository.save(paciente);
+        var uri = uriBuilder.path("/pacientes/{id}").buildAndExpand(paciente.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DadosDetalhamentoPaciente(paciente)); // devolve 201
     }
 
     @GetMapping
-    public Page<DadosListagemPaciente> listarPacientes(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao){
-        return pacienteRepository.findAllByAtivoTrue(paginacao).map(DadosListagemPaciente::new);
+    public ResponseEntity<Page<DadosListagemPaciente>> listarPacientes(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao){
+        var page = pacienteRepository.findAllByAtivoTrue(paginacao).map(DadosListagemPaciente::new);
+        return ResponseEntity.ok(page);
     }
 
     @PutMapping
     @Transactional
-    public void atualizarPaciente(@RequestBody @Valid DadosAtualizacaoPaciente dados){
+    public ResponseEntity atualizarPaciente(@RequestBody @Valid DadosAtualizacaoPaciente dados){
         var paciente = pacienteRepository.getReferenceById(dados.getId());
         paciente.atualizarInformacoes(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void removerPaciente(@PathVariable Long id) {
+    public ResponseEntity excluirPaciente(@PathVariable Long id) {
         var paciente = pacienteRepository.getReferenceById(id);
         paciente.inativar();
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalharPacientePeloId(@PathVariable Long id) {
+        var paciente = pacienteRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
     }
 }
